@@ -1,0 +1,77 @@
+<%- include("./layouts/header.ejs") %>  
+        
+
+    <h1>Manage Category</h1>
+
+    <a href="/admin/category">
+        <button type="button" class="btn btn-success" style="margin-top:20px;font-size:20px;">
+            <i class="zmdi zmdi-arrow-missed"></i> Back
+        </button>
+    </a>
+  
+    <!-- MAIN CONTENT-->
+                    
+   <div class="row m-t-30">
+                        <div class="col-md-12">
+                            <!-- DATA TABLE-->
+                            <div class="table-responsive m-b-40">
+                                <div class="row">
+                                    <div class="col-lg-12 ">
+                                        <div class="card">
+                                            <!-- <div class="card-header">Credit Card</div> -->
+                                            <div class="card-body">
+                                                <!-- <div class="card-title">
+                                                    <h3 class="text-center title-2">Pay Invoice</h3>
+                                                </div>
+                                                <hr> -->
+                                                <form action="/admin/category/manage_category" method="post" enctype="multipart/form-data" novalidate>
+                                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                                    <div class="form-group">
+                                                        <label for="category_name" class="control-label mb-1">Category Name:</label>
+                                                        <input id="category_name" name="category_name" type="text" value="<%= oldInput.category_name.length>0 ? oldInput.category_name : result.category_name %>" class="form-control" aria-required="true" aria-invalid="false" required>
+                                                        
+                                                        <% if(error.category_name.length>0){ %>
+                                                        <div class="alert alert-danger" role="alert">
+                                                            <%= error.category_name %>
+                                                        </div>    
+                                                        <% } %>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="category_slug" class="control-label mb-1">Category Slug :</label>
+                                                        <input id="category_slug" name="category_slug" type="text" value="<%= oldInput.category_slug.length>0 ? oldInput.category_slug : result.category_slug %>" class="form-control" aria-required="true" aria-invalid="false" required>
+                                                        <% if(error.category_slug.length>0){ %>
+                                                            <div class="alert alert-danger" role="alert">
+                                                                <%= error.category_slug %>
+                                                            </div>    
+                                                        <% } %>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="image" class="control-label mb-1">Category Slug :</label>
+                                                        <input type="file" id="image" name="image" class="form-control" aria-required="true" aria-invalid="false" required>
+                                                        <% if(error.image.length>0){ %>
+                                                            <div class="alert alert-danger" role="alert">
+                                                                <%= error.image %>
+                                                            </div>    
+                                                        <% } %>
+                                                    </div>
+
+                                                    <input type="hidden" id="id" name="id" value="<%= result.category_id %>">
+                                                    <div>
+                                                        <button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">
+                                                            Submit    
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            <!-- END DATA TABLE-->
+                        </div>
+    </div>            
+<%- include("./layouts/footer.ejs") %>
+
+

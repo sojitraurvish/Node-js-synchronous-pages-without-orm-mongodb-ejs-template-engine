@@ -1,0 +1,100 @@
+<%- include("./layouts/header.ejs") %>  
+
+    <% if(message.positiveMessage.length>0){ %>
+    <div class="sufee-alert alert with-close alert-success alert-dismissible fade show">
+        <span class="badge badge-pill badge-success">Success</span>
+        <%= message.positiveMessage %>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <%}%>
+    <% if(message.negativeMessage.length>0){ %>
+    <div class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
+        <span class="badge badge-pill badge-danger">Fail</span>
+        <%= message.negativeMessage %>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <%}%>
+
+    <h1>Category Master</h1>
+
+    <a href="/admin/category/manage_category">
+        <button type="button" class="btn btn-success" style="margin-top:20px;font-size:20px;">
+            <i class="zmdi zmdi-plus"></i> Add New
+        </button>
+    </a>
+  
+    <!-- MAIN CONTENT-->
+                    
+   <div class="row m-t-30">
+                        <div class="col-md-12">
+                            <!-- DATA TABLE-->
+                            <div class="table-responsive m-b-40">
+                                <table style="text-align: center;" class="table table-borderless table-striped table-earning" >
+                                    <thead>
+                                        <tr >
+                                            <th>ID</th>
+                                            <th>Category Name</th>
+                                            <th>Category Slug</th>
+                                            <th>Category Image</th>
+                                            <th>Category Invoice</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% if(rows.length>0){%>
+                                            <% let no=0; %>
+                                            <% for(let row in rows){ %>
+                                                <tr>
+                                                    <td><%= ++no %></td>
+                                                    <td><%= rows[row].category_name %></td>
+                                                    <td><%= rows[row].category_slug %></td>
+                                                    <td><a href="/<%= rows[row].image %>" target="_blank"><img src="/<%= rows[row].image %>" height="50" width="50" style="border-radius: 50%;" /></a></td>
+                                                    <td><a href="/admin/orders/<%= rows[row]._id%>" target="_blank">Download  Invoice</a></td>
+                                                    <td>
+                                                        <a href="/admin/category/<%= rows[row]._id%>/manage_category" class="btn btn-success">Edit</a>
+                                                        <a id="deleteCategories<%= rows[row]._id%>" onclick="myFunction('<%= row._id%>')" href="/admin/category/<%= rows[row]._id%>/delete" class="btn btn-danger">Delete</a>
+                                                    </td>
+                                                </tr>
+                                                
+                                            <% } %>
+                                        <% }else{ %> 
+                                            <tr>
+                                                <td colspan="6" style="text-align: center;">Opp's No Data Found!...</td>
+                                            </tr>
+                                        <% } %>
+                                        <!-- for pagination -->
+                                        <section style="text-align: center;margin-top: 2rem;">
+                                            <%if(pagination.currentPage!==1 && pagination.previousPage !==1){%><a style="text-decoration:none;color:#00695c;padding:0.5rem;border:1px solid #00695c; margin:0.1rem ;" href="/admin/category?page=1" >1</a><%}%>
+                                            <%if(pagination.havePreviousPage){%><a style="text-decoration:none;color:#00695c;padding:0.5rem;border:1px solid #00695c; margin:0.1rem;" href="/admin/category?page=<%= pagination.previousPage %>"><%= pagination.previousPage %></a>  <%}%>
+                                            <a style="text-decoration:none;color:#00695c;padding:0.5rem;border:1px solid #00695c; margin:0.1rem;background-color:cadetblue;" href="/admin/category?page=<%= pagination.currentPage %>"><%= pagination.currentPage %></a>
+                                            <%if(pagination.hasNextPage){%><a style="text-decoration:none;color:#00695c;padding:0.5rem;border:1px solid #00695c; margin:0.1rem;" href="/admin/category?page=<%= pagination.nextPage %>"><%= pagination.nextPage %></a>  <%}%>
+                                            <%if(pagination.lastPage!==pagination.currentPage && pagination.nextPage!==pagination.lastPage){%><a style="text-decoration:none;color:#00695c;padding:0.5rem;border:1px solid #00695c; margin:0.1rem;" href="/admin/category?page=<%= pagination.lastPage %>"><%= pagination.lastPage %></a><%}%>
+                                        </section>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- END DATA TABLE-->
+                        </div>
+
+                        <script>
+                            function myFunction(id)
+                            {
+                                let text="Presss Ok button to Delete Record!\n Either Ok or Cancel."
+                                if(confirm(text)==false)
+                                {
+                                    document.getElementById("deleteCategories"+id).href='';
+                                    text="You Canceled!";
+                                    alert(text);
+                                }
+                            
+                            }
+                        </script>
+                        
+<%- include("./layouts/footer.ejs") %>
+
+
